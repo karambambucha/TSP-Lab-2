@@ -17,6 +17,10 @@ namespace TSP_Lab_2
         public Form1()
         {
             InitializeComponent();
+            chart1.Titles.Add("Диаграмма потока");
+            Axis ax = new Axis();
+            ax.Title = "Время t";
+            chart1.ChartAreas[0].AxisX = ax;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -67,6 +71,7 @@ namespace TSP_Lab_2
 
                 chart1.Series[0].Color = Color.Red;
                 chart1.Series[0].MarkerSize = 7;
+               
                 label4.Text = "Всего ламп: " + NumLamps + "\nВышедших из строя: " + NumFails;
             }
             catch (Exception ex)
