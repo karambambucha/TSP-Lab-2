@@ -17,6 +17,10 @@ namespace TSP_Lab_2
         public Form1()
         {
             InitializeComponent();
+            chart1.Titles.Add("Диаграмма потока");
+            Axis ax = new Axis();
+            ax.Title = "Время t";
+            chart1.ChartAreas[0].AxisX = ax;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -64,10 +68,12 @@ namespace TSP_Lab_2
 
                 chart1.Series.Clear();
                 chart1.Series.Add(failSeries);
-
+                chart1.ChartAreas[0].AxisX.Minimum = 0;
+                chart1.ChartAreas[0].AxisX.Maximum = Time;
                 chart1.Series[0].Color = Color.Red;
-                chart1.Series[0].MarkerSize = 7;
-                label4.Text = "Всего ламп: " + NumLamps + "\nВышедших из строя: " + NumFails;
+                chart1.Series[0].MarkerSize = 5;
+               
+                label4.Text = $"Всего ламп: {NumLamps}\nВышедших из строя: {NumFails}\nПоток Эрланга {k}-го порядка\nИнтенсивность порождающего потока: {PuassonIntensity}\nИнтенсивность самого потока: {ThreadIntensity}";
             }
             catch (Exception ex)
             {
