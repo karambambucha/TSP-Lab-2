@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -31,10 +25,13 @@ namespace TSP_Lab_2
                 double MathExpectance = decimal.ToDouble(MathExpectanceNumeric.Value);
                 double StandardDeviance = decimal.ToDouble(StandardDevianceNumeric.Value);
                 double Time = decimal.ToDouble(TimeNumeric.Value);
-
+                if(MathExpectance == StandardDeviance)
+                    throw new Exception("Мат. ожидание равно среднеквадратическому отклонению!");
                 var ThreadIntensity = 1.0 / MathExpectance;
                 var k = Math.Round((1.0 / Math.Pow(StandardDeviance, 2) / Math.Pow(ThreadIntensity, 2)), 0, MidpointRounding.AwayFromZero);
                 var PuassonIntensity = Math.Round(ThreadIntensity * k, 0, MidpointRounding.AwayFromZero);
+                if(k <= 1)
+                    throw new Exception("Порядок потока Эрланга вышло <= 1!");
                 double t = 0;
                 double n = 0;
                 double NumLamps = 0;
@@ -44,7 +41,7 @@ namespace TSP_Lab_2
                 while (true)
                 { 
                     double r = rnd.NextDouble();
-                    double T = -1.0 / PuassonIntensity * Math.Log(r);
+                    double T = Math.Abs(-1.0 / PuassonIntensity * Math.Log(r));
                     t += T;
                     n++;
                     if(t<Time)
